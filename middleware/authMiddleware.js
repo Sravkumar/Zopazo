@@ -35,8 +35,5 @@ const protect = async (req, res, next) => {
   }
 };
 
-const User = require('../models/user'); // ✅ lowercase
-
-
 module.exports = { protect };
 
