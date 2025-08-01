@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
+const { signupUser } = require('../controllers/authController');
+const user = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -10,14 +11,14 @@ router.post('/register', async (req, res) => {
     const { name, email, phone, password, role } = req.body;
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await user.findOne({ email });
     if (existingUser) return res.status(400).json({ error: 'Email already exists' });
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user
-    const user = new User({
+    const user = new user({
       name,
       email,
       phone,
@@ -39,7 +40,7 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     // Find user
-    const user = await User.findOne({ email });
+    const user = await user.findOne({ email });
     if (!user) return res.status(400).json({ error: 'Invalid email or password' });
 
     // Match password
@@ -67,5 +68,6 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Login failed', details: err.message });
   }
 });
+router.post('/signup', signupUser);
 
 module.exports = router;

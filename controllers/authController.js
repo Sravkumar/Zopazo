@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const user = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -107,4 +107,8 @@ exports.getProfile = async (req, res) => {
     console.error('Profile Error:', err);
     res.status(500).json({ error: 'Server error' });
   }
+  const signupUser = async (req, res) => {
+  // your logic here
+  };
+  module.exports = { signupUser };
 };
