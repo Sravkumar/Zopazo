@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user'); // ✅ Make sure file is lowercase
+const { loginUser, signupUser } = require('../controllers/authController');
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // 🔐 Register a new user - POST /api/auth/signup
+router.post('/login', loginUser);
+router.post('/signup', signupUser);
 router.post('/signup', async (req, res) => {
   try {
     const { name, email, phone, password, role } = req.body;
